@@ -30,6 +30,11 @@ const experienceController = {
   },
   add: async (req, res) => {
     try {
+      console.log('Req File:', req.file)
+      console.log('Req Body:', req.body)
+      if (!req.file) {
+        return res.status(400).send({ message: 'Please upload a picture' })
+      }
       const payload = {
         id_experience: uuidv4(),
         project_name: req.body.project_name,
@@ -37,10 +42,11 @@ const experienceController = {
         star: req.body.star,
         end_date: req.body.end_date,
         link_deploy: req.body.link_deploy,
-        link_repo: req.body.link_repo
+        link_repo: req.body.link_repo,
+        image: req.file.filename
       }
       // console.log(payload)
-      // console.log(payload.id_experience)
+      console.log(payload.id_experience)
       const result = await experienceModel.add(payload)
       return res.status(201).send({ message: 'succes', data: result })
     } catch (error) {
@@ -53,19 +59,30 @@ const experienceController = {
       const { project_name, project_description, star, end_date, link_deploy, link_repo } = req.body
       console.log(project_name)
 
-      const prevExpereince = await experienceModel.getDetail(id)
-      console.log(prevExpereince)
+      const prevExperience = await experienceModel.getDetail(id)
+      console.log(prevExperience)
 
-      const updateProject_name = project_name || prevExpereince.project_name
-      const updateProject_description = project_description || prevExpereince.project_description
-      const updateStar = star || prevExpereince.star
-      const updateEnd_date = end_date || prevExpereince.end_date
-      const updateLink_deploy = link_deploy || prevExpereince.link_deploy
-      const updateLink_repo = link_repo || prevExpereince.link_repo
+      const image = req.file ? req.file.filename : prevExperience.image
+
+      const updateProject_name = project_name || prevExperience.project_name
+      const updateProject_description = project_description || prevExperience.project_description
+      const updateStar = star || prevExperience.star
+      const updateEnd_date = end_date || prevExperience.end_date
+      const updateLink_deploy = link_deploy || prevExperience.link_deploy
+      const updateLink_repo = link_repo || prevExperience.link_repo
       // console.log(id)
       // console.log(updateName)
       // console.log(name)
-      const result = await experienceModel.update({ id, project_name: updateProject_name, project_description: updateProject_description, star: updateStar, end_date: updateEnd_date, link_deploy: updateLink_deploy, link_repo: updateLink_repo })
+      const result = await experienceModel.update({ id, project_name: updateProject_name, project_description: updateProject_description, star: updateStar, end_date: updateEnd_date, link_deploy: updateLink_deploy, link_repo: updateLink_repo, image })
+
+      if (prevExperience.image && prevExperience.image !== image) {
+        const filePath = path.join(__dirname, '..', '..', 'public', 'uploads', 'images', prevExperience.image)
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error('Failed to delete old file:', err)
+          }
+        })
+      }
       return res.status(201).send({ message: 'success', data: result })
     } catch (error) {
       return res.status(500).send({ message: error.message })

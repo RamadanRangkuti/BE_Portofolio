@@ -23,25 +23,25 @@ const experienceModel = {
       })
     })
   },
-  add: ({ id_experience, project_name, project_description, star, end_date, link_deploy, link_repo }) => {
+  add: ({ id_experience, project_name, project_description, star, end_date, link_deploy, link_repo, image }) => {
     return new Promise((resolve, reject) => {
-      db.query('INSERT INTO experiences(id_experience, project_name, project_description, star, end_date, link_deploy, link_repo) VALUES($1,$2,$3,$4,$5,$6,$7)', [id_experience, project_name, project_description, star, end_date, link_deploy, link_repo], (err, result) => {
+      db.query('INSERT INTO experiences(id_experience, project_name, project_description, star, end_date, link_deploy, link_repo, image) VALUES($1,$2,$3,$4,$5,$6,$7,$8)', [id_experience, project_name, project_description, star, end_date, link_deploy, link_repo, image], (err, result) => {
         if (err) {
           console.error('Error in database query:', err)
           reject(err.message)
         } else {
-          resolve({ id_experience, project_name, project_description, star, end_date, link_deploy, link_repo })
+          resolve({ id_experience, project_name, project_description, star, end_date, link_deploy, link_repo, image })
         }
       })
     })
   },
-  update: ({ id, project_name, project_description, star, end_date, link_deploy, link_repo }) => {
+  update: ({ id, project_name, project_description, star, end_date, link_deploy, link_repo, image }) => {
     return new Promise((resolve, reject) => {
-      db.query('UPDATE experiences SET project_name=$1, project_description=$2, star=$3, end_date=$4, link_deploy=$5, link_repo=$6 WHERE id_experience=$7', [project_name, project_description, star, end_date, link_deploy, link_repo, id], (err, result) => {
+      db.query('UPDATE experiences SET project_name=$1, project_description=$2, star=$3, end_date=$4, link_deploy=$5, link_repo=$6, image=$7 WHERE id_experience=$8', [project_name, project_description, star, end_date, link_deploy, link_repo, image, id], (err, result) => {
         if (err) {
           reject(err.message)
         } else {
-          resolve({ id, project_name, project_description, star, end_date, link_deploy, link_repo })
+          resolve({ id, project_name, project_description, star, end_date, link_deploy, link_repo, image })
         }
       })
     })
