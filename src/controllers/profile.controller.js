@@ -64,7 +64,7 @@ const profileController = {
       const updateEmail = email || prevProfile.email
       const updatePassword = password || prevProfile.password
       const updateDescription = description || prevProfile.description
-      // console.log(id)
+      console.log(password)
       // console.log(updateName)
       // console.log(name)
       console.log(updateDescription)

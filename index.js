@@ -4,7 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const router = require('./src/routes/index')
 
-const { SERVER_PORT } = process.env
+const PORT = process.env.SERVER_PORT || 5000
 app.use(cors())
 app.use(express.static('public'))
 // menerima application/www.form-encoded
@@ -16,8 +16,8 @@ app.use(express.json())
 
 // console.log(SERVER_PORT)
 app.use('/api/v1/', router)
-app.listen(SERVER_PORT, () => {
-  console.log(`Server Running on PORT ${SERVER_PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server Running on PORT ${PORT}`)
 })
 
 app.get('*', (req, res) => {

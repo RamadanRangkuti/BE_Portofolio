@@ -12,7 +12,6 @@ const authController = {
         return res.status(400).json({ message: 'Email and password are required!' })
       }
       const result = await authModel.login(email)
-
       if (!result) {
         return res.status(404).json({ message: 'Unregistered email!' })
       }
