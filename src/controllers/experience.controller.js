@@ -64,7 +64,7 @@ const experienceController = {
       const prevExperience = await experienceModel.getDetail(id)
       console.log(prevExperience)
 
-      const image = req.file ? req.file.filename : prevExperience.image
+      const image = req.file ? req.file.path : prevExperience.image
 
       const updateProject_name = project_name || prevExperience.project_name
       const updateProject_description = project_description || prevExperience.project_description

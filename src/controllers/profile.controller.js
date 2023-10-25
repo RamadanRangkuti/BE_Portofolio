@@ -9,7 +9,7 @@ const profileController = {
   get: async (req, res) => {
     try {
       const result = await profileModel.get()
-      return res.status(200).send({ message: 'succes', data: result })
+      return res.status(200).send({ message: 'succes', data: result[0] })
     } catch (error) {
       res.status(500).send({ message: error })
     }
