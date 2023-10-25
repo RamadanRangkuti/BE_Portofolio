@@ -3,7 +3,7 @@ const profileModel = require('../models/profile.model')
 const { v4: uuidv4 } = require('uuid')
 const fs = require('fs')
 const path = require('path')
-const bycrpt = require('bcrypt')
+const bycrpt = require('bcryptjs')
 
 const profileController = {
   get: async (req, res) => {
