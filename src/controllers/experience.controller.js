@@ -35,6 +35,7 @@ const experienceController = {
       if (!req.file) {
         return res.status(400).send({ message: 'Please upload a picture' })
       }
+      fileUrl = req.file.path
       const payload = {
         id_experience: uuidv4(),
         project_name: req.body.project_name,
@@ -43,7 +44,8 @@ const experienceController = {
         end_date: req.body.end_date,
         link_deploy: req.body.link_deploy,
         link_repo: req.body.link_repo,
-        image: req.file.filename
+        // image: req.file.filename
+        image: fileUrl
       }
       // console.log(payload)
       console.log(payload.id_experience)
