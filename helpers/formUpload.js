@@ -17,14 +17,14 @@ cloudinary.config({
 // connecting cloudinary setup with CloudinaryStorage
 const storage = new CloudinaryStorage({
   cloudinary,
-  params:{
+  params: {
     folder: 'assets',
     format: async (req, file) => 'png',
     public_id: (req, file) => ''
   }
 })
 
-const parser = multer({storage:storage})
+const parser = multer({ storage:storage})
 module.exports = parser
 
 // UPLOAD FILE TO PUBLIC
